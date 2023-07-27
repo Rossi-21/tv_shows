@@ -14,6 +14,10 @@ def create_show(request):
 
         show = Show.objects.create(title = title, network = network, release_date = release_date, description = description)
         
-        return redirect("/shows/new")
+        return redirect(f"/shows/{show.id}",show)
+
+def display_show(request, id):
+      context = {"show": Show.objects.get(id=id)}
+      return render(request, "display_show.html", context) 
 
 
