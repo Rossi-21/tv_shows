@@ -20,4 +20,23 @@ def display_show(request, id):
       context = {"show": Show.objects.get(id=id)}
       return render(request, "display_show.html", context) 
 
+def display_all(request):
+      context = {"shows": Show.objects.all()}
+      return render(request, "landing.html", context)
 
+def edit_show(request, id):
+      context = {"show": Show.objects.get(id=id)}
+      return render(request, "edit.html", context )
+
+def update(request, id):
+       
+        show = Show.objects.get(id=id)
+
+        title = request.POST['title']
+        network = request.POST['network']
+        release_date = request.POST['release_date']
+        description = request.POST['description']
+
+        show.save()
+
+        return redirect(f"/shows/{show.id}",show)
