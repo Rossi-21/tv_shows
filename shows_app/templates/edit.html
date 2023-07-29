@@ -11,7 +11,6 @@
     <h1>Update TV Show!!!!</h1>
     <form class="ms-4" action="/shows/update/{{show.id}}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="id" value="{{show.id}}">
         <label for="title" class="form-label fw-bold">Title:</label>
         <input class="form-control" type="text" name="title" value="{{show.title}}">
         <label for="network" class="form-label fw-bold">Network:</label>

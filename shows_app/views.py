@@ -29,13 +29,18 @@ def edit_show(request, id):
       return render(request, "edit.html", context )
 
 def update(request, id):
-       
+        
         show = Show.objects.get(id=id)
 
         title = request.POST['title']
         network = request.POST['network']
         release_date = request.POST['release_date']
         description = request.POST['description']
+
+        show.title = title
+        show.network = network
+        show.release_date = release_date
+        show.description = description
 
         show.save()
 
