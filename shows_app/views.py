@@ -45,3 +45,10 @@ def update(request, id):
         show.save()
 
         return redirect(f"/shows/{show.id}",show)
+
+def delete(request, id):
+      
+      show = Show.objects.get(id=id)
+      show.delete()
+
+      return redirect("/shows")
