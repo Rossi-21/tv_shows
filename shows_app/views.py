@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from shows_app.models import Show
 
 def index(request):
@@ -6,15 +7,25 @@ def index(request):
 
 def create_show(request):
         
-        title = request.POST['title']
-        network = request.POST['network']
-        release_date = request.POST['release_date']
-        description = request.POST['description']
-        
+        errors = Show.objects.validator(request.POST)
 
-        show = Show.objects.create(title = title, network = network, release_date = release_date, description = description)
-        
-        return redirect(f"/shows/{show.id}",show)
+        if len(errors) > 0:
+            
+            for key, value in errors.items():
+                messages.error(request, value)
+            
+            return redirect ('/shows/new')
+       
+        else:
+            
+            title = request.POST['title']
+            network = request.POST['network']
+            release_date = request.POST['release_date']
+            description = request.POST['description']
+            
+            show = Show.objects.create(title = title, network = network, release_date = release_date, description = description)
+            
+            return redirect(f"/shows/{show.id}",show)
 
 def display_show(request, id):
       context = {"show": Show.objects.get(id=id)}
