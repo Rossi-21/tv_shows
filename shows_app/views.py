@@ -40,22 +40,33 @@ def edit_show(request, id):
       return render(request, "edit.html", context )
 
 def update(request, id):
+        errors = Show.objects.validator(request.POST)
+
+        if len(errors) > 0:
+            show = Show.objects.get(id=id)
+            
+            for key, value in errors.items():
+                messages.error(request, value)
+            
+            return redirect (f"/shows/{show.id}/edit", show)
+       
+        else:
         
-        show = Show.objects.get(id=id)
+            show = Show.objects.get(id=id)
 
-        title = request.POST['title']
-        network = request.POST['network']
-        release_date = request.POST['release_date']
-        description = request.POST['description']
+            title = request.POST['title']
+            network = request.POST['network']
+            release_date = request.POST['release_date']
+            description = request.POST['description']
 
-        show.title = title
-        show.network = network
-        show.release_date = release_date
-        show.description = description
+            show.title = title
+            show.network = network
+            show.release_date = release_date
+            show.description = description
 
-        show.save()
+            show.save()
 
-        return redirect(f"/shows/{show.id}",show)
+            return redirect(f"/shows/{show.id}",show)
 
 def delete(request, id):
       

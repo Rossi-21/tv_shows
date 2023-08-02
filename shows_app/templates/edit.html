@@ -9,6 +9,15 @@
     </head>
 <body class="m-5 p-5">
     <h1>Update TV Show!!!!</h1>
+    <div class="text-danger">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tages %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
     <form class="ms-4" action="/shows/update/{{show.id}}" method="post">
         {% csrf_token %}
         <label for="title" class="form-label fw-bold">Title:</label>
